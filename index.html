@@ -1,0 +1,204 @@
+<!doctype html>
+<!--
+  Copyright 2018 Google LLC
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html ng-app="BookFinder">
+<head>
+  <meta charset="utf-8">
+  <title>Book finder</title>
+  <!-- TODO(mbrukman): fix code to work with Angular 1.3.0 and later. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+  <!-- TODO(mbrukman): fix code to work with Angular UI Bootstrap 0.13.0 and later. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Sans+Caption:400,700"
+        rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"
+	      rel="stylesheet" type="text/css" />
+
+  <script src="books.js"></script>
+  <link href="books.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div style="header" align=center>
+<h1>Book search</h1>
+</div>
+
+<div ng-controller="SearchCtrl" style="content" align=center>
+  <form ng-submit="search()">
+    <div class="form-horizontal">
+      <input autofocus ng-model="query" size="20" type="text" />
+      <button class="btn-primary" type="submit">search</button><br />
+
+      <table border=0>
+        <tr>
+          <td class="tdLabel"><label>availability:</label></td>
+          <td class="tdSelect">
+            <select ng-model="filter" class="search" style="width: 10em">
+              <option value="full">full view</option>
+              <option value="free-ebooks">Google ebooks</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="tdLabel"><label>download:</label></td>
+          <td class="tdSelect">
+            <select ng-model="download" class="search" style="width: 5em">
+              <option value="epub">epub</option>
+              <option value="">any</option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="tdLabel"><label>lang:</label></td>
+          <td class="tdSelect">
+            <select ng-model="lang" class="search" style="width: 5em">
+              <option>en</option>
+              <option>ru</option>
+            </select>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+  </form>
+
+  <table border=0>
+		<tr ng-repeat="book in data.items"
+			  ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
+      <td>
+        <img ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}">
+      </td>
+      <td>
+        <em>{{truncateTitle(book.volumeInfo.title)}}</em><br>
+        <em ng-show="book.volumeInfo.subtitle">
+          {{truncateTitle(book.volumeInfo.subtitle)}}
+        </em><br ng-show="book.volumeInfo.subtitle">
+        <span ng-repeat="author in book.volumeInfo.authors">
+          {{author}}<span ng-show="! $last">, </span>
+        </span><br>
+        <a ng-href="{{book.accessInfo.webReaderLink}}"
+           ng-show="book.accessInfo.webReaderLink">web reader</a> |
+        <a ng-href="https://google.com/books?id={{book.id}}&&printsec=frontcover#v=onepage">Google Books</a> |
+        <a ng-href="https://play.google.com/store/books/details?id={{book.id}}">Google Play</a> |
+        <a ng-href="https://www.googleapis.com/books/v1/volumes/{{book.id}}">JSON</a>
+      </td>
+    </tr>
+  </table>
+
+  <table border=0>
+    <tr ng-class-even="'even'"
+        ng-class-odd="'odd'"
+        ng-mouseenter="showLinks = true"
+        ng-mouseleave="showLinks = false"
+        ng-repeat="book in data.results">
+      <td valign="top">
+        <img class="clickable book"
+             ng-click="toggleBook(book)"
+             ng-src="{{book.artworkUrl60}}">
+      </td>
+      <td  valign="top">
+        <span class="clickable bookTitle"
+              ng-click="toggleBook(book)">
+          {{book.collectionName}}
+        </span>
+        <br>
+        <span class="bookArtist">
+          {{book.artistName}}
+        </span>
+        <br>
+
+        <!-- Displayed on mouseover in the row; hidden on mouseout. -->
+        <span ng-show="showLinks">
+          <a href="{{book.feedUrl}}">RSS</a> |
+          <a href="{{book.collectionViewUrl}}">iTunes</a>
+        </span>
+
+        <div modal="book.modal"
+             close="closeModalBook(book)">
+          <div class="modal-header">
+            <table>
+              <tr>
+                <td valign="top" class="book">
+                  <img class="clickable book"
+                       ng-click="bookDescription = !bookDescription"
+                       ng-src="{{book.artworkUrl60}}"
+                       style="vertical-align: top">
+                </td>
+                <td valign="top" align="left">
+                  <span class="bookTitle" ng-bind="book.collectionName">
+                  </span>
+                  <br>
+                  <span class="bookArtist" ng-bind="book.artistName">
+                  </span>
+                  <br>
+                </td>
+              </tr>
+              <tr>
+                <td colspan=2>
+                  <span class="bookDesc"
+                        ng-bind="book.rss.channel.description"
+                        ng-show="bookDescription">
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-body">
+            <table>
+              <tr ng-repeat="item in book.rss.channel.item">
+                <td valign="top">
+                  <!-- TODO: subtitles, text content, etc. -->
+                  {{$index + 1}}.&nbsp;
+                </td>
+                <td valign="top">
+                  <span class="bookTitle clickable"
+                        ng-class="episodeClass(item)"
+                        ng-click="setActiveMedia(item)"
+                        ng-mouseover="item.showSummary = true"
+                        ng-mouseout="item.showSummary = false"
+                        ng-show="hasEnclosedUrl(item) && hasMedia(item)">
+                    {{item.title}}
+                    <span class="episodeSummary"
+                          ng-show="showEpisodeSummary(item)">
+                      <br>{{item['itunes:summary']}}
+                    </span>
+                  </span>
+
+                  <!-- The URL is not supported media: link to it directly. -->
+                  <span class="bookTitle"
+                        ng-show="hasEnclosedUrl(item) && !hasMedia(item)">
+                    <a href="{{enclosureUrl(item)}}">{{item.title}}</a>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <!-- TODO: figure out how to display sanitized HTML rather than
+            escaped HTML. -->
+            <span ng-bind="activeMedia.description"></span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
