@@ -4,7 +4,8 @@ Easily find free, fully-readable and/or downloadable books via Google Books API.
 Upon finding a book, you can view it online using the Google Books HTML reader,
 or download it for your ebook reader.
 
-Clone this repository and then open `index.html` in your browser to try it out.
+See the [live demo](https://mbrukman.github.io/librarian/), or clone this
+repository and then open `index.html` in your browser to try it out.
 
 ## Contributing
 
