@@ -82,7 +82,7 @@
     <tr ng-repeat="book in data.items"
         ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
       <td>
-        <img ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}">
+        <img ng-src="{{secureUrl(book.volumeInfo.imageLinks.smallThumbnail)}}">
       </td>
       <td>
         <em>{{truncateTitle(book.volumeInfo.title)}}</em><br>

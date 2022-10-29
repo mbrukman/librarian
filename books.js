@@ -68,6 +68,15 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
     return truncateString(input, BOOK_TITLE_MAX_LENGTH);
   };
 
+  $scope.secureUrl = function(url) {
+    // Google Books API returns HTTP URLs for book cover images, even though it
+    // should be using HTTPS URLs only; this generates a warning in the console.
+    if (url.startsWith('http://books.google.com/')) {
+      return url.replace(/^http:/, 'https:');
+    }
+    return url;
+  }
+
   /**
    * Documentation:
    * https://developers.google.com/books/docs/v1/using
