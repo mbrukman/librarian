@@ -87,7 +87,7 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
       callback: 'JSON_CALLBACK',
       download: $scope.download,
       filter: $scope.filter,
-      langRestruct: $scope.lang,
+      langRestrict: $scope.lang,
       maxResults: 25,
       prettyPrint: false,
       printType: 'books',
