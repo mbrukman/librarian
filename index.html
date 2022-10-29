@@ -26,7 +26,7 @@
   <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,700|PT+Sans+Caption:400,700"
         rel="stylesheet" type="text/css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css"
-	      rel="stylesheet" type="text/css" />
+        rel="stylesheet" type="text/css" />
 
   <script src="books.js"></script>
   <link href="books.css" rel="stylesheet" type="text/css" />
@@ -79,8 +79,8 @@
   </form>
 
   <table border=0>
-		<tr ng-repeat="book in data.items"
-			  ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
+    <tr ng-repeat="book in data.items"
+        ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
       <td>
         <img ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}">
       </td>
