@@ -19,8 +19,8 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
   $scope.data = {items: []};
   $scope.status = null;
 
-  $scope.filter = 'free-ebooks';
-  $scope.download = 'epub';
+  $scope.filter = 'full';
+  $scope.download = '';
   $scope.lang = 'en';
 
   /**
