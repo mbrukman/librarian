@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-angular.module('BookFinder', ['ui.bootstrap']);
+angular.module('Librarian', ['ui.bootstrap']);
 
 function SearchCtrl($scope, $http, $templateCache, $timeout) {
   $scope.query = '';
