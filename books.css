@@ -43,6 +43,7 @@ td.podcast, img.podcast {
 
 td.tdLabel {
   text-align: left;
+  padding-right: 1em;
 }
 
 td.tdSelect {
