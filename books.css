@@ -15,7 +15,7 @@
  */
 
 body {
-  font-family: 'PT Sans', sans-serif;
+  font-family: sans-serif;
   font-size: 11pt;
 }
 
@@ -25,17 +25,6 @@ div.header {
 
 div.content {
   text-align: center;
-}
-
-td.podcast, img.podcast {
-  height: 60px;
-  width: 60px;
-}
-
-.podcastTitle {
-  font-family: 'PT Sans Caption', sans-serif;
-  font-size: 11pt;
-  font-weight: bold;
 }
 
 .bookTitle {
