@@ -97,11 +97,6 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
     $http({
       method: 'JSONP',
       url: urlFull,
-      // We may want to switch to proxy-based fetch here, but the above
-      // approach lets us search for podcasts in the browser without even
-      // running the proxy.
-      //
-      // url: '/?q=' + encodeURIComponent(urlFull),
       cache: $templateCache,
     })
       .success(function(data, status) {
