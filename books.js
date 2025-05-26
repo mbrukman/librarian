@@ -46,26 +46,34 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
     return urlParams.join('&');
   }
 
-  var JS_TYPE_OBJECT = 'object';
-  var JS_TYPE_STRING = 'string';
-  var JS_TYPE_UNDEFINED = 'undefined';
+  const JS_TYPE_STRING = 'string';
+  const JS_TYPE_UNDEFINED = 'undefined';
 
-  var BOOK_TITLE_MAX_LENGTH = 40;
+  const BOOK_TITLE_MAX_LENGTH = 60;
+  const AUTHORS_MAX_LENGTH = 60;
 
+  /**
+   * @param {string} input
+   * @param {number} maxLength
+   * @return {string} the input string, truncated to max specified length.
+   */
   function truncateString(input, maxLength) {
     if (typeof input != JS_TYPE_STRING ||
         input.length <= maxLength) {
       return input;
     }
-    return input.substr(0, maxLength - 1) +
-      // If the truncated string does not end with a space, add one before the
-      // elipsis for readability.
-      (input[maxLength] == ' ' ? '' : ' ') +
-      '...';
+    return input.substr(0, maxLength) + '...';
   }
 
-  $scope.truncateTitle = function(input) {
-    return truncateString(input, BOOK_TITLE_MAX_LENGTH);
+  $scope.truncateTitle = function(title) {
+    return truncateString(title, BOOK_TITLE_MAX_LENGTH);
+  };
+
+  $scope.truncateAuthors = function(authors) {
+    if (typeof authors === JS_TYPE_UNDEFINED) {
+      return undefined;
+    }
+    return truncateString(authors.join(', '), AUTHORS_MAX_LENGTH);
   };
 
   $scope.secureUrl = function(url) {

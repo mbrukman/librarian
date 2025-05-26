@@ -149,25 +149,35 @@
   </form>
 
   <table border=0>
-    <tr ng-repeat="book in data.items"
-        ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
-      <td>
-        <img ng-src="{{secureUrl(book.volumeInfo.imageLinks.smallThumbnail)}}">
-      </td>
-      <td>
-        <em>{{truncateTitle(book.volumeInfo.title)}}</em><br>
-        <em ng-show="book.volumeInfo.subtitle">
-          {{truncateTitle(book.volumeInfo.subtitle)}}
-        </em><br ng-show="book.volumeInfo.subtitle">
-        <span ng-repeat="author in book.volumeInfo.authors">
-          {{author}}<span ng-show="! $last">, </span>
-        </span><br>
-        <a ng-href="https://play.google.com/books/reader?id={{book.id}}">web reader</a> |
-        <a ng-href="https://google.com/books?id={{book.id}}&&printsec=frontcover#v=onepage">Google Books</a> |
-        <a ng-href="https://play.google.com/store/books/details?id={{book.id}}">Google Play</a> |
-        <a ng-href="https://www.googleapis.com/books/v1/volumes/{{book.id}}">JSON</a>
-      </td>
-    </tr>
+    <tbody ng-repeat="book in data.items"
+           ng-show="download != 'epub' || (download == 'epub' && book.accessInfo.epub.isAvailable)">
+      <tr>
+        <td>
+          <img ng-src="{{secureUrl(book.volumeInfo.imageLinks.smallThumbnail)}}">
+        </td>
+
+        <!-- Horizontal spacer between the book cover and content. -->
+        <td style="width: 15px"></td>
+
+        <td>
+          <b>{{truncateTitle(book.volumeInfo.title)}}</b><br />
+          <em ng-show="book.volumeInfo.subtitle">
+            {{truncateTitle(book.volumeInfo.subtitle)}}<br />
+          </em>
+          <span ng-show="book.volumeInfo.authors">
+            {{truncateAuthors(book.volumeInfo.authors)}}<br />
+          </span>
+          <a ng-href="https://play.google.com/books/reader?id={{book.id}}">web reader</a> |
+          <a ng-href="https://google.com/books?id={{book.id}}&&printsec=frontcover#v=onepage">Google Books</a> |
+          <a ng-href="https://play.google.com/store/books/details?id={{book.id}}">Google Play</a> |
+          <a ng-href="https://www.googleapis.com/books/v1/volumes/{{book.id}}">JSON</a>
+        </td>
+      </tr>
+
+      <!-- Vertical spacer between consecutive books. -->
+      <tr ng-if="($index + 1) !== items.length" style="height: 20px">
+        <td colspan="100%"></td>
+      </tr>
   </table>
 
 </div>
