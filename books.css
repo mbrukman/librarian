@@ -38,24 +38,3 @@ td.tdLabel {
 td.tdSelect {
   text-align: left;
 }
-
-.episodeSummary {
-  background: #fff;
-  color: #999;
-  font-style: italic;
-}
-
-.clickable {
-  cursor: pointer;
-}
-
-.even {
-  background: #eee;
-}
-
-.odd {
-}
-
-.modal-footer {
-  text-align: left;
-}
