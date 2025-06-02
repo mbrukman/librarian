@@ -110,7 +110,7 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
       .success(function(data, status) {
         $scope.data = data;
         $scope.status = status;
-        console.log(data);
+        console.debug('Returned data from Books API:', data);
       })
       .error(function(data, status) {
         $scope.data = data || "Request failed";
