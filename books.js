@@ -27,7 +27,7 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
    * @return {boolean}
    */
   $scope.proxyCompatible = function() {
-    var protocol = document.location.protocol;
+    const protocol = document.location.protocol;
     return (protocol == 'http:') || (protocol == 'https:');
   };
 
@@ -36,7 +36,7 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
    * @return {string} the constructed URL params, to be appended to the base URL.
    */
   function combineUrlParamsNonEmpty(params) {
-    var urlParams = [];
+    const urlParams = [];
     Object.keys(params).forEach(function(key) {
       // Skip empty values.
       if (params[key]) {
@@ -90,8 +90,8 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
    * https://developers.google.com/books/docs/v1/using
    */
   $scope.search = function() {
-    var urlBase = 'https://www.googleapis.com/books/v1/volumes?';
-    var urlParamsRaw = {
+    const urlBase = 'https://www.googleapis.com/books/v1/volumes?';
+    const urlParamsRaw = {
       callback: 'JSON_CALLBACK',
       download: $scope.download,
       filter: $scope.filter,
@@ -101,7 +101,7 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
       printType: 'books',
       q: $scope.query,
     };
-    var urlFull = urlBase + combineUrlParamsNonEmpty(urlParamsRaw);
+    const urlFull = urlBase + combineUrlParamsNonEmpty(urlParamsRaw);
     $http({
       method: 'JSONP',
       url: urlFull,
