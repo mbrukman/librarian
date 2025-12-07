@@ -17,6 +17,7 @@
 <html ng-app="Librarian">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Librarian: search Google Books</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"
           integrity="sha384-VcMwKVOMdW6scLWaJWj3TDPhVxlpXO6Rv4LpFX9Tvp0/SRF/v9wRMB22VGPXsRZP"
@@ -34,11 +35,11 @@
 </head>
 <body>
 
-<div style="header" align=center>
+<div class="header">
   <h1>Book search</h1>
 </div>
 
-<div ng-controller="SearchCtrl" style="content" align=center>
+<div ng-controller="SearchCtrl" class="content">
   <form ng-submit="search()">
     <div class="form-horizontal">
       <input autofocus ng-model="query" size="20" type="text" />

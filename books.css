@@ -27,7 +27,8 @@ div.content {
   text-align: center;
 }
 
-.bookTitle {
+div.content table {
+  margin: 0 auto;
 }
 
 td.tdLabel {
@@ -37,4 +38,113 @@ td.tdLabel {
 
 td.tdSelect {
   text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: 12pt;
+    padding: 8px;
+  }
+
+  /* Make tables responsive */
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Hide spacers */
+  td[style*="width: 15px"],
+  tr[style*="height: 20px"],
+  tr[style*="height: 10px"] {
+    display: none;
+  }
+
+  /* Adjust form layout */
+  .form-horizontal input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+    /* Prevent zoom on iOS */
+  }
+
+  .form-horizontal button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 15px;
+  }
+
+  /* Adjust select boxes */
+  td.tdLabel {
+    padding-right: 0;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  td.tdSelect {
+    margin-bottom: 10px;
+  }
+
+  /* Override for filter table to keep label and select on same line */
+  .form-horizontal table tr {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .form-horizontal table td.tdLabel {
+    width: 100px;
+    /* Fixed width to align dropdowns */
+    min-width: 100px;
+    margin-top: 0;
+    padding-right: 10px;
+    text-align: right;
+  }
+
+  .form-horizontal table td.tdSelect {
+    width: auto;
+    flex-grow: 1;
+    margin-bottom: 0;
+  }
+
+  td.tdSelect select {
+    width: 100% !important;
+    /* Override inline styles */
+    height: 40px;
+    font-size: 16px;
+    background-color: white;
+  }
+
+  /* Adjust book results */
+  img {
+    max-width: 150px;
+    /* Limit image size */
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+  }
+
+  /* Add spacing between books */
+  tbody {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    display: block;
+  }
+
+  /* Center text in results */
+  td {
+    text-align: center;
+  }
+
+  /* But keep labels left aligned */
+  td.tdLabel {
+    text-align: left;
+  }
 }
