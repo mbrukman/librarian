@@ -14,10 +14,20 @@
 
 angular.module('Librarian', ['ui.bootstrap']);
 
+function clearApiResponse() {
+  return {
+    hasError: false,
+    code: 200,
+    status: 'OK',
+    message: '',
+  };
+}
+
 function SearchCtrl($scope, $http, $templateCache, $timeout) {
   $scope.query = '';
   $scope.data = {items: []};
-  $scope.status = null;
+  $scope.apiResponse = clearApiResponse();
+  $scope.numErrors = 0;
 
   $scope.filter = 'full';
   $scope.download = '';
@@ -90,6 +100,8 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
    * https://developers.google.com/books/docs/v1/using
    */
   $scope.search = function() {
+    $scope.apiResponse = clearApiResponse();
+
     const urlBase = 'https://www.googleapis.com/books/v1/volumes?';
     const urlParamsRaw = {
       callback: 'JSON_CALLBACK',
@@ -108,13 +120,25 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
       cache: $templateCache,
     })
       .success(function(data, status) {
-        $scope.data = data;
-        $scope.status = status;
         console.debug('Returned data from Books API:', data);
+        // Note that if there's an `error` submessage in the returned `data`,
+        // that status trumps the one separately sent with the API response.
+        console.debug('Returned status from Books API:', status);
+        $scope.data = data;
+        if ('error' in data) {
+          const error = data.error;
+          $scope.apiResponse.code = error.code;
+          $scope.apiResponse.hasError = (error.code != 200);
+          $scope.apiResponse.status = error.status;
+          $scope.apiResponse.message = error.message;
+
+          $scope.numErrors++;
+        }
       })
       .error(function(data, status) {
+        console.debug('Error: returned data from Books API:', data);
+        console.debug('Error: returned status from Books API:', status);
         $scope.data = data || "Request failed";
-        $scope.status = status;
       });
   };
 }
