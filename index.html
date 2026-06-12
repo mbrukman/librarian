@@ -144,6 +144,15 @@
         </tr>
 
       </table>
+
+      <div ng-if="apiResponse.hasError" style="margin-top: 20px">
+        <div>
+          <b>Error {{apiResponse.code}} {{apiResponse.status}}:</b> {{apiResponse.message}}
+        </div>
+        <div style="margin-top: 10px">
+          This is error #{{numErrors}} in this session.
+        </div>
+      </div>
     </div>
   </form>
 
