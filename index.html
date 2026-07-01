@@ -143,6 +143,19 @@
           </td>
         </tr>
 
+        <tr>
+          <td class="tdLabel">
+            <label>
+              <a href="" ng-click="showApiKey = !showApiKey" style="text-decoration: none; cursor: pointer; color: black;">
+                {{showApiKey ? '▼ API key:' : '▶ API key:'}}
+              </a>
+            </label>
+          </td>
+          <td class="tdSelect">
+            <input ng-show="showApiKey" ng-model="apiKey" type="text" placeholder="Enter API key" style="width: 11em" />
+          </td>
+        </tr>
+
       </table>
 
       <div ng-if="apiResponse.hasError" style="margin-top: 20px">
@@ -151,6 +164,11 @@
         </div>
         <div style="margin-top: 10px">
           This is error #{{numErrors}} in this session.
+        </div>
+        <div ng-if="!apiKey && numErrors >= 2" style="margin-top: 10px;">
+          If you continue to experience errors, <a
+            href="https://github.com/mbrukman/librarian/tree/main/README.md#google-books-api-key">create
+            a Google Books API key</a> and input it into the box above.
         </div>
       </div>
     </div>

@@ -32,6 +32,8 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
   $scope.filter = 'full';
   $scope.download = '';
   $scope.lang = 'en';
+  $scope.apiKey = '';
+  $scope.showApiKey = false;
 
   /**
    * @return {boolean}
@@ -113,6 +115,9 @@ function SearchCtrl($scope, $http, $templateCache, $timeout) {
       printType: 'books',
       q: $scope.query,
     };
+    if ($scope.apiKey && $scope.apiKey.trim()) {
+      urlParamsRaw.key = $scope.apiKey.trim();
+    }
     const urlFull = urlBase + combineUrlParamsNonEmpty(urlParamsRaw);
     $http({
       method: 'JSONP',

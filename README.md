@@ -7,6 +7,26 @@ or download it for your ebook reader.
 See the [live demo](https://mbrukman.github.io/librarian/), or clone this
 repository and then open `index.html` in your browser to try it out.
 
+## Google Books API key
+
+The unauthenticated Google Books API has strict quota limits which are
+frequently exhausted because the whole world shares the same limited quota.
+
+If you keep seeing errors that the API quota is exhausted, you can bring your
+own Google Books API key (which is free):
+
+1. Open your Google Cloud Platform project in the [Google Cloud
+	 Console](https://console.cloud.google.com) or create a new one
+2. Open the [Google Books API in the API
+	 Marketplace](https://console.cloud.google.com/marketplace/product/google/books.googleapis.com)
+3. Enable the Google Books API in your project
+3. Open the [Google Books API credentials page](https://console.cloud.google.com/apis/api/books.googleapis.com/credentials)
+4. Create a new API key, limited to Google Books API. You can limit it to "Web
+	 sites" since that's where we are using it.
+5. Paste that API key into the form by expanding the "API key" option. The API
+	 key is only sent to Google Books servers, and is not stored or recorded
+	 anywhere else; this is a purely client-side web app with no server component.
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for more details.
